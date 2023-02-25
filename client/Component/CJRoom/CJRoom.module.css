@@ -1,0 +1,15 @@
+.form {
+  max-width: 400px;
+  display: flex;
+
+  flex-direction: column;
+  border: solid black 1px;
+  padding: 30px;
+}
+.main {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}

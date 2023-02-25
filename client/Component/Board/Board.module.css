@@ -1,0 +1,45 @@
+.grid {
+  display: grid;
+  width: 180px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  grid-auto-rows: minmax(50px, auto);
+  background: black;
+}
+.flexrow {
+  display: flex;
+  gap: 30px;
+}
+.flexcolumn {
+  display: flex;
+  flex-direction: column;
+}
+.font {
+  color: green;
+  font-size: 1rem;
+}
+.small_letter {
+  font-size: 1rem;
+}
+.remove_rows {
+  flex-direction: column;
+  gap: 30px;
+}
+
+.height {
+  height: 80%;
+}
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+}
+.grid div {
+  background: white;
+  /* border: 5px solid black; */
+}
+.nflex {
+  display: flex;
+  gap: 30px;
+}
