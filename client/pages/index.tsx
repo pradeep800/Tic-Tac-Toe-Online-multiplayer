@@ -5,16 +5,13 @@ import { useGameStore } from "@/lib/store";
 import dynamic from "next/dynamic";
 import { useEffect } from "react";
 function HomeSSR() {
-  useEffect(() => {
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Enter") {
-        event.preventDefault();
-      }
-    });
-  }, []);
   const io = useGameStore((state) => {
     return state.IO;
   });
+  const roomId = useGameStore((state) => {
+    return state.roomId;
+  });
+
   return <Wrapper>{!io ? <CJRoom /> : <Board />}</Wrapper>;
 }
 

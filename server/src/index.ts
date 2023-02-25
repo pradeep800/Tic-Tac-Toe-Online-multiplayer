@@ -60,7 +60,6 @@ io.on("connection", (socket: Socket) => {
   socket.on("join", (id: string, name) => {
     if (rooms.get(id)?.["playerId"].length < 2) {
       if (rooms.get(id)["playerId"].includes(socket.id)) {
-        console.log("error");
         socket.emit("error", "Already Joined");
       } else {
         rooms.get(id)["playerId"].push(socket.id);
@@ -77,7 +76,6 @@ io.on("connection", (socket: Socket) => {
    * when game startes then this event is triggered
    */
   socket.on("start", (roomId, name) => {
-    console.log(rooms);
     rooms.get(roomId).sucStart++;
     if (rooms.get(roomId).sucStart >= 2) {
       rooms.get(roomId).sucStart = 0;

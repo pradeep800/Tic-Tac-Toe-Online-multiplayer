@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useGameStore, useProfileInfo } from "@/lib/store";
 import style from "./Board.module.css";
-import { io } from "socket.io-client";
 interface Info {
   board: string[];
   turn: "X" | "O" | undefined;
@@ -30,7 +29,6 @@ export default function Board() {
     setYourTurn,
     yourTurn,
   } = useGameStore();
-  console.log("room id ", roomId);
   const name = useProfileInfo((state) => {
     return state.getName;
   });
@@ -48,7 +46,6 @@ export default function Board() {
      */
     IO?.on("start", (obj: Info) => {
       setStart(true);
-      console.log(obj);
       setScoreboard([obj.names, obj.wins]);
 
       let i = 0;
@@ -58,7 +55,6 @@ export default function Board() {
         }
       });
       setYourMark(obj["order"][i]);
-      console.log("choose", obj["order"][i]);
       IO.emit("start", roomId, name());
     });
     /**
@@ -126,9 +122,7 @@ export default function Board() {
     let a: HTMLDivElement = e.target as HTMLDivElement;
     let data_id_str = a.getAttribute("data-id");
     let data_id: number | undefined;
-    console.log(data_id_str, yourTurn);
     if (data_id_str && yourTurn) {
-      console.log(yourTurn);
       setYourTurn(false);
       let selected = document.querySelector(
         `[data-id='${data_id_str}']`
@@ -151,11 +145,12 @@ export default function Board() {
   }
   return (
     <div className={`${style.flex} ${style.height} ${style.remove_rows}`}>
+      {!start && (
+        <div className={`${style.Room}`}>Room Id :-{" " + roomId}</div>
+      )}
       {start && (
         <div className={`${style.flexrow}`}>
           {scoreBoard.map((ele, i) => {
-            console.log(ele);
-
             return (
               <div
                 key={i}

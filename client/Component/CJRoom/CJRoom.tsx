@@ -61,12 +61,7 @@ export default function CJRoom() {
   }
   return (
     <div className={`${style.main}`}>
-      <form
-        className={`${style.form}`}
-        onSubmit={(e) => {
-          e.preventDefault();
-        }}
-      >
+      <div className={`${style.form}`}>
         <button onClick={Create} style={{ marginBottom: "30px" }}>
           Create Room
         </button>
@@ -74,7 +69,7 @@ export default function CJRoom() {
         <input ref={inputEle} style={{ marginBottom: "5px" }} />
         <button onClick={Join}>Join</button>
         {error && <div>there is Some kind of Error</div>}
-      </form>
+      </div>
     </div>
   );
 }

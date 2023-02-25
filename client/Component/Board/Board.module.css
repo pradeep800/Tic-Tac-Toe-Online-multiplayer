@@ -6,6 +6,9 @@
   grid-auto-rows: minmax(50px, auto);
   background: black;
 }
+.Room {
+  font-size: 1.5rem;
+}
 .flexrow {
   display: flex;
   gap: 30px;
