@@ -63,7 +63,7 @@ export default function Board() {
     IO?.on("close", reset);
 
     /**
-     * It is deciding turns
+     * It is use for deciding turns
      */
     IO?.on("turn", (s) => {
       if (s === yourMark) {
@@ -100,7 +100,6 @@ export default function Board() {
   }, [yourMark, board, IO, roomId, yourTurn, winner]);
   /**
    * Reset
-   * We start going back by this because we remove socket which is condition for rendering this page
    */
   function reset() {
     setYourTurn(false);
@@ -116,7 +115,7 @@ export default function Board() {
   }
 
   /**
-   * this function is excuted when we click on squire
+   * this function is excuted when we click on square
    */
   function EventDeligation(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     let a: HTMLDivElement = e.target as HTMLDivElement;
@@ -131,14 +130,13 @@ export default function Board() {
       let prev = board;
       if (data_id !== undefined) prev[data_id] = yourMark as string;
       /**
-       * when we played the move and then it back as played event then it  update the state of board
+       * when player played the move and then server emit play event with prev array
        */
       IO?.emit("played", prev, roomId);
     }
   }
   /**
-   * When we want to start with another game
-   * it can be because this is over or we don't see any possibility of winning
+   * When we want to start with another match
    */
   function AnotherMatch() {
     IO?.emit("another-match", roomId);
