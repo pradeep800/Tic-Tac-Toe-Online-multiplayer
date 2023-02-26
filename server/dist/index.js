@@ -17,17 +17,10 @@ const io = new Server(server, {
     },
 });
 let rooms = new Map();
-/**
- * this is for chaging turns
- *
- */
 function ChangeTurns(RoomId) {
     rooms.get(RoomId).turn = rooms.get(RoomId).turn === "O" ? "X" : "O";
 }
 io.on("connection", (socket) => {
-    /**
-     * When someone room is created when this event triggered
-     */
     socket.on("create-room", (name) => {
         let roomId = getNumber();
         rooms.set(roomId, {
@@ -43,9 +36,6 @@ io.on("connection", (socket) => {
         rooms.get(roomId).names[0] = name;
         socket.emit("room-joined", roomId);
     });
-    /**
-     * when somenoe joined this event get triggers
-     */
     socket.on("join", (id, name) => {
         if (rooms.get(id)?.["playerId"].length < 2) {
             if (rooms.get(id)["playerId"].includes(socket.id)) {
@@ -63,9 +53,6 @@ io.on("connection", (socket) => {
             socket.emit("error", "No More Space");
         }
     });
-    /**
-     * when game startes then this event is triggered
-     */
     socket.on("start", (roomId, name) => {
         rooms.get(roomId).sucStart++;
         if (rooms.get(roomId).sucStart >= 2) {
@@ -74,9 +61,6 @@ io.on("connection", (socket) => {
             ChangeTurns(roomId);
         }
     });
-    /**
-     * when player played his turned it will check if it is winning codition or it will wil chance to another player
-     */
     socket.on("played", (prev, roomId) => {
         rooms.get(roomId).lastActivity = Date.now();
         let Xwon = WinCheck(prev, "X");
@@ -105,18 +89,11 @@ io.on("connection", (socket) => {
             ChangeTurns(roomId);
         }
     });
-    /**
-     * When we Want  to close this socket
-     * it will remove it from memory and close from all device which are connected to this room
-     */
     socket.on("close", (roomId) => {
         rooms.delete(roomId);
         io.to(roomId).emit("close");
         io.of("/").adapter.rooms.delete(roomId);
     });
-    /**
-     * when you have to reset your board  and start again
-     */
     socket.on("another-match", (roomId) => {
         rooms.get(roomId).order = [
             rooms.get(roomId).order[1],
@@ -129,7 +106,7 @@ io.on("connection", (socket) => {
     });
 });
 /**
- * It every 1 minnute if there is some room with are in active for Timout time
+ * setinterval check in every 1 minute if there is some room which is not active it will delete them and emit close event
  */
 setInterval(() => {
     let ThisPoint = Date.now();

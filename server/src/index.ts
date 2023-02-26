@@ -130,7 +130,7 @@ io.on("connection", (socket: Socket) => {
   });
 });
 /**
- * setinterval check in every 1 minute if there is some room which is not active it delete them and emit close event
+ * setinterval check in every 1 minute if there is some room which is not active it will delete them and emit close event
  */
 setInterval(() => {
   let ThisPoint = Date.now();
